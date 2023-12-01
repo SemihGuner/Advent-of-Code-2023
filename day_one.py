@@ -1003,19 +1003,21 @@ toplam = 0
 numbers = ["one","two","three","four","five","six","seven","eight","nine"] 
 dizi = entry.split('\n')
 for i in range(len(dizi)-1):
+    #print("start of i")
     yeniStr="0"
     # Part 1 
     for j in range(len(dizi[i])):
+        #print("start of j")
         if dizi[i][j].isdigit():
             yeniStr += dizi[i][j]
         else:
             # Part 2  
             araniyor=""
             check = True
-            for p in range(len(numbers)):
-                numLen = len(numbers[p])
-                numLen+=1
-                araniyor = dizi[i][j:numLen]
+            for p in range(len(numbers)): 
+                #print("start of p")
+                numLen = len(numbers[p]) 
+                araniyor = dizi[i][j:j+numLen]
                 print("i-j-p: {}-{}-{} ; araniyor: {} ; numLen: {}".format(i,j,p,araniyor,numLen)) 
                 if (araniyor == numbers[0]) & check:
                     yeniStr+="1"
