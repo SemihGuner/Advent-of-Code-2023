@@ -61,4 +61,4 @@ for i in range(len(spData)):
                     check=False
     donusecekStr = yeniStr[1] + yeniStr[-1]
     toplam+=int(donusecekStr) 
-print(toplam)
+print("Summation:" , toplam)
