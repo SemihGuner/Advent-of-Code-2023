@@ -999,6 +999,7 @@ gnpksz4
 4919
 pbc19
 """ 
+
 toplam = 0
 numbers = ["one","two","three","four","five","six","seven","eight","nine"] 
 dizi = entry.split('\n')
