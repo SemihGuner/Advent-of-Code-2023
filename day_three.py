@@ -21,12 +21,12 @@ def generate_unique_list(pattern, data):
     return unique_list
 
 def getIndexes(specialList, data):  
-    ind= list()
+    ind= {}
     for i in range(len(data)):
         for j in range(len(data[i])):
             if (data[i][j] in specialList) & (j not in ind):
-                ind.append(j)
-    ind.sort()
+                ind[(i,j)] = data[i][j]
+    #ind.sort()
     return ind 
 
 def findNumberLocations(data,turnCount):
@@ -81,9 +81,30 @@ def findNumberLocations(data,turnCount):
         i+=1
     return totalNumandInd
 
+def SpotTheMarkedNumbers(numberDict, specialDict,specialList):
+    summation = 0
+    # dikey | 
+    for key,value in numberDict.items():
+        alreadySummed = False
+        holdKey = key[1]
+        for tKey, tValue in specialDict.items():  
+            if (tKey[1] == holdKey) and (not alreadySummed): 
+                summation += int(value)
+                print(f"Adding {value} to summation")
+                break
+
+    # yatay |
+    for yKey,yValue in numberDict.items():
+        if (yKey[0]-1 in specialList) & (yKey[0]+1 in specialList):
+            summation+= yValue
+
+    return summation
+
 
 # definitions end here, and cmds start.
 specials= generate_unique_list("[^0-9.]",entry)
 indexesOfSpecials= getIndexes(specials,engineData) 
 NumsAndIndexes = findNumberLocations(engineData, len(engineData)) 
-print(NumsAndIndexes)
+spots = SpotTheMarkedNumbers(NumsAndIndexes,indexesOfSpecials,specials)
+#print(indexesOfSpecials)
+print("spots:" , spots)
