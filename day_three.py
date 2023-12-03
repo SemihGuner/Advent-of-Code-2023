@@ -21,15 +21,69 @@ def generate_unique_list(pattern, data):
     return unique_list
 
 def getIndexes(specialList, data):  
-    ind= np.array([], dtype=int)
+    ind= list()
     for i in range(len(data)):
         for j in range(len(data[i])):
             if (data[i][j] in specialList) & (j not in ind):
-                ind = np.append(ind,j)
+                ind.append(j)
     ind.sort()
-    return ind
-specials= generate_unique_list("[^0-9.]",entry)
-indexesOfSpecials= getIndexes(specials,engineData)
+    return ind 
 
-print(specials) 
-print(indexesOfSpecials)
+def findNumberLocations(data,turnCount):
+    totalNumandInd = {}
+    i=0
+    while i < turnCount:
+        j=0
+        while j < len(data[i]):  
+            # Start checking indexes of the row.
+            if j <= len(data[i])-3: #This if is to make sure we don't gat OutOfIndex error. Checks if we are still in the array.
+                if data[i][j].isdigit() & data[i][j+1].isdigit() & data[i][j+2].isdigit():
+                    #3 digit number
+                    num = int(data[i][j])*100 + int(data[i][j+1]) * 10 + int(data[i][j+2]) 
+                    totalNumandInd[(i,j)] = num
+                    totalNumandInd[(i,j+1)] = num
+                    totalNumandInd[(i,j+2)] = num
+                    j+=3
+                    
+                elif data[i][j].isdigit() & data[i][j+1].isdigit():
+                    #2 digit number
+                    num = int(data[i][j])*10 + int(data[i][j+1]) 
+                    totalNumandInd[(i,j)] = num
+                    totalNumandInd[(i,j+1)] = num
+                    j+=2
+                    
+                elif data[i][j].isdigit():
+                    num = int(data[i][j])
+                    totalNumandInd[(i,j)] = num 
+                    j+=1
+                    
+            elif j <= len(data[i])-2: #This if is to make sure we don't gat OutOfIndex error. Checks if we are still in the array.
+                if data[i][j].isdigit() & data[i][j+1].isdigit():
+                    #2 digit number
+                    num = int(data[i][j])*10 + int(data[i][j+1]) 
+                    totalNumandInd[(i,j)] = num
+                    totalNumandInd[(i,j+1)] = num
+                    j+=2
+                    
+                elif data[i][j].isdigit():
+                    num = int(data[i][j])
+                    totalNumandInd[(i,j)] = num 
+                    j+=1
+                    
+            elif j<=len(data[i])-1: #This if is to make sure we don't gat OutOfIndex error. Checks if we are still in the array.
+                if data[i][j].isdigit():
+                    num = int(data[i][j])
+                    totalNumandInd[(i,j)] = num 
+                    j+=1
+                    
+            j+=1
+
+        i+=1
+    return totalNumandInd
+
+
+# definitions end here, and cmds start.
+specials= generate_unique_list("[^0-9.]",entry)
+indexesOfSpecials= getIndexes(specials,engineData) 
+NumsAndIndexes = findNumberLocations(engineData, len(engineData)) 
+print(NumsAndIndexes)
