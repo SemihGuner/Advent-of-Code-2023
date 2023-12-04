@@ -7,6 +7,7 @@ import numpy as np
 entry = aocd.get_data(day=3,year=2023) 
 engineData = entry.split('\n')
 
+
 def generate_unique_list(pattern, data):
     unique_list = []
 
